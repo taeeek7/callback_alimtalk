@@ -18,9 +18,13 @@ host = os.getenv("keeper_host")
 user = os.getenv("keeper_user")
 password = os.getenv("keeper_password")
 db = os.getenv("keeper_db")
-appKey = os.getenv("appKey")
-secretKey = os.getenv("secretKey")
-senderKey = os.getenv("senderKey")
+
+appKey = os.getenv("nhn_appKey")
+secretKey = os.getenv("nhn_secretKey")
+senderKey = os.getenv("nhn_senderKey")
+
+kcms_id = os.getenv("kcms_id")
+kcms_pw = os.getenv("kcms_pw")
 
 #전역변수 선언부
 conn = None
@@ -156,9 +160,9 @@ driver.get('https://kcms.11c.co.kr/')
 
 # 로그인
 search_box = driver.find_element(By.XPATH, "//*[@id='root']/section/div[2]/div[1]/div[2]/div[1]/input")
-search_box.send_keys("austin@11c.kr")
+search_box.send_keys(kcms_id)
 search_box = driver.find_element(By.XPATH, "//*[@id='root']/section/div[2]/div[1]/div[2]/div[2]/input")
-search_box.send_keys("#rud9751")
+search_box.send_keys(kcms_pw)
 
 login_button = driver.find_element(By.XPATH, "//*[@id='root']/section/div[2]/div[1]/div[2]/button")
 login_button.click()
@@ -169,8 +173,8 @@ time.sleep(2)
 for i in range(0,last_row) :
     
     ###비즈알림톡 API 변수 설정
-    appkey = appKey
-    secretkey = secretKey
+    app_key = appKey
+    secret_key = secretKey
     sender_key = senderKey
     template_code = "keeper_callback"
     
@@ -184,12 +188,12 @@ for i in range(0,last_row) :
     }
 
     # API 엔드포인트 URL
-    url = f"https://api-alimtalk.cloud.toast.com/alimtalk/v2.3/appkeys/{appkey}/messages"
+    url = f"https://api-alimtalk.cloud.toast.com/alimtalk/v2.3/appkeys/{app_key}/messages"
 
     # 요청 헤더 설정
     headers = {
         "Content-Type": "application/json;charset=UTF-8",
-        "X-Secret-Key": secretkey
+        "X-Secret-Key": secret_key
     }
 
     # 요청 본문 데이터 설정
