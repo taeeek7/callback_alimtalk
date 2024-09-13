@@ -71,6 +71,7 @@ def callback_send_main() :
     error_code = []
     error_message = []
     error_keeper = []
+    success_keeper = []
 
 
     ### keeper WEB 로그인 ###
@@ -115,7 +116,7 @@ def callback_send_main() :
             "templateCode": "CallbackMessage",
             "messages": [
                 {
-                    "to": f"{recipient_no}",
+                    "to": f"01022317362",
                     "title": "안녕하세요 키퍼님",
                     "content": f"안녕하세요 {name} 키퍼님, 열한시 클리닝 {branch}에 지원해 주셔서 감사합니다!\n\n업무 상담과 궁금하신 내용 문의는 [열한시클리닝_{branch}] 채널을 통해 진행됩니다.\n\n상담 시 성함과 연락처를 함께 남겨주시면 빠르고 정확한 답변이 가능하며, 이후 지점 담당자가 확인하여 답변드리도록 하겠습니다.\n\n답변을 기다리시는 동안 교육 영상 시청을 부탁드립니다.\n\n감사합니다.",
                     "buttons": [
@@ -141,14 +142,13 @@ def callback_send_main() :
         response_Code = response_text['statusCode']
         response_message = response_text['messages'][0]['requestStatusDesc']
 
-        print(response_text)
         ### 알림톡 발송 후 결과값 입력 ###   
         # 변수 설정
         keeper_id = df.loc[i,1]
         keeper_name = df.loc[i,2]
         
         ### 알림톡 발송 성공 시 ###
-        if response_Code == 202 : 
+        if response_Code == '202' : 
 
             #계정상세페이지 접속
             driver.get(f'https://kcms.11c.co.kr/account-fulfillments-detail/{keeper_id}/')
@@ -162,6 +162,7 @@ def callback_send_main() :
             
             #성공건수 count
             success_cnt = success_cnt + 1
+            success_keeper.append(keeper_name)
             
 
         ### 알림톡 발송 실패 시 ###
@@ -178,7 +179,7 @@ def callback_send_main() :
             time.sleep(1)
 
             # 에러건수 count 
-            error_cnt = error_cnt + 1 
+            error_cnt = error_cnt + 1
             error_message.append(response_message)
             error_code.append(response_Code)
             error_keeper.append(keeper_name)
@@ -194,6 +195,7 @@ def callback_send_main() :
             + f"   ● 실행일시 : {now}\n"
             + f"   ● 실행건수 : {last_row} 건\n"
             + f"   ● 결과 : 성공 {success_cnt} 건  / 실패 {error_cnt} 건\n"
+            + f"         ○ success_keeper : {success_keeper}\n"
             + f"         ○ error_code : {error_code}\n"
             + f"         ○ error_keeper : {error_keeper}"
     )
