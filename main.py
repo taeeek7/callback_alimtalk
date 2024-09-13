@@ -122,14 +122,14 @@ def callback_send_main() :
                         {
                             "type": "WL",
                             "name": "교육 영상 시청하기",
-                            "linkMobile": f"{ytb_url}",
-                            "linkPc": f"{ytb_url}"
+                            "linkMobile": {ytb_url},
+                            "linkPc": {ytb_url}
                         },
                         {
                             "type": "WL",
                             "name": "지점 채널로 이동하기",
-                            "linkMobile": f"{ch_url}",
-                            "linkPc": f"{ch_url}"
+                            "linkMobile": {ch_url},
+                            "linkPc": {ch_url}
                         },
                     ],
                     "useSmsFailover": False,
@@ -141,6 +141,7 @@ def callback_send_main() :
         response_Code = response_text['statusCode']
         response_message = response_text['messages'][0]['requestStatusDesc']
 
+        print(response_text)
         ### 알림톡 발송 후 결과값 입력 ###   
         # 변수 설정
         keeper_id = df.loc[i,1]
