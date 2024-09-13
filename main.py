@@ -122,14 +122,14 @@ def callback_send_main() :
                         {
                             "type": "WL",
                             "name": "교육 영상 시청하기",
-                            "linkMobile": {ytb_url},
-                            "linkPc": {ytb_url}
+                            "linkMobile": f"{ytb_url}",
+                            "linkPc": f"{ytb_url}"
                         },
                         {
                             "type": "WL",
                             "name": "지점 채널로 이동하기",
-                            "linkMobile": {ch_url},
-                            "linkPc": {ch_url}
+                            "linkMobile": f"{ch_url}",
+                            "linkPc": f"{ch_url}"
                         },
                     ],
                     "useSmsFailover": False,
