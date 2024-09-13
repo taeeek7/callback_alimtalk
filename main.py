@@ -31,7 +31,7 @@ def get_data() :
         mk.name AS kp_name,
         mk.phone,
         mk.state_code,
-        b.kakao_link,
+        REPLACE(b.kakao_link,'http://','') AS kakao_link,
         DATE_FORMAT(mk.insert_at, '%Y-%m-%d') AS insert_at
     from member_keeper as mk 
     LEFT JOIN branch b
@@ -108,28 +108,28 @@ def callback_send_main() :
         name = df.loc[i,2]
         branch = df.loc[i,0]
         ch_url = df.loc[i,5]
-        ytb_url = "https://m.youtube.com/watch?v=MlMheHn0vJg"
+        ytb_url = "m.youtube.com/watch?v=MlMheHn0vJg"
 
         body = {
             "plusFriendId": "@열한시키퍼",
             "templateCode": "CallbackMessage",
             "messages": [
                 {
-                    "to": "01022317362",
+                    "to": f"{recipient_no}",
                     "title": "안녕하세요 키퍼님",
                     "content": f"안녕하세요 {name} 키퍼님, 열한시 클리닝 {branch}에 지원해 주셔서 감사합니다!\n\n업무 상담과 궁금하신 내용 문의는 [열한시클리닝_{branch}] 채널을 통해 진행됩니다.\n\n상담 시 성함과 연락처를 함께 남겨주시면 빠르고 정확한 답변이 가능하며, 이후 지점 담당자가 확인하여 답변드리도록 하겠습니다.\n\n답변을 기다리시는 동안 교육 영상 시청을 부탁드립니다.\n\n감사합니다.",
                     "buttons": [
                         {
                             "type": "WL",
                             "name": "교육 영상 시청하기",
-                            "linkMobile": f"{ytb_url}",
-                            "linkPc": f"{ytb_url}"
+                            "linkMobile": f"https://{ytb_url}",
+                            "linkPc": f"https://{ytb_url}"
                         },
                         {
                             "type": "WL",
                             "name": "지점 채널로 이동하기",
-                            "linkMobile": f"{ch_url}",
-                            "linkPc": f"{ch_url}"
+                            "linkMobile": f"https://{ch_url}",
+                            "linkPc": f"https://{ch_url}"
                         },
                     ],
                     "useSmsFailover": False,
@@ -215,40 +215,3 @@ if __name__ == "__main__" :
             channel="C06FQURRGCS",
             text=  f"*🤬 callback alimtalk 오류 알림*\n\n ● 오류내용 : {e}\n"
         )
-        
-
- # template_parameter = {
-        #     "name": df.loc[i,2] , 
-        #     "branch" : df.loc[i,0] ,
-        #     "ch_url" : df.loc[i,5] ,
-        #     "ytb_url" : "https://m.youtube.com/watch?v=MlMheHn0vJg",  
-        # }
-
-        # # API 엔드포인트 URL
-        # url = f"https://api-alimtalk.cloud.toast.com/alimtalk/v2.3/appkeys/{app_key}/messages"
-
-        # # 요청 헤더 설정
-        # headers = {
-        #     "Content-Type": "application/json;charset=UTF-8",
-        #     "X-Secret-Key": secret_key
-        # }
-
-        # # 요청 본문 데이터 설정
-        # requestBody = {
-        #     "senderKey": sender_key,
-        #     "templateCode": template_code,
-        #     "recipientList": [{
-        #         "recipientNo": recipient_no,
-        #         "templateParameter": template_parameter,
-        #         "resendParameter": {
-        #         "isResend" : True,
-        #         "resendTitle" : "열한시 키퍼",
-        #         "resendSendNo" : "resend_number"
-        #         }
-        #     }]
-        # }
-
-    # app_key = appKey
-        # secret_key = secretKey
-        # sender_key = senderKey
-        # template_code = "keeper_callback"
