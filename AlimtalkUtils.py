@@ -9,6 +9,8 @@ import time
 import urllib
 
 load_dotenv()
+base_uri = os.getenv("ALIMTALK_BASE_URI")
+alimtalk_url = os.getenv("ALIMTALK_URL")
 
 class AlimtalkUtils : 
     # 생성자
@@ -38,10 +40,10 @@ class AlimtalkUtils :
         channelId = urllib.parse.quote(channel_id)
         
         get_param = f"channelId={channelId}&templateCode={template_code}"
-        get_uri = f"{os.getenv("ALIMTALK_BASE_URI")}/templates?{get_param}"
+        get_uri = f"{base_uri}/templates?{get_param}"
         signature = AlimtalkUtils.make_signature(self, uri= get_uri, method= "GET", timestamp= timestamp)
         
-        url = f"{os.getenv("ALIMTALK_URL")}{get_uri}"
+        url = f"{alimtalk_url}{get_uri}"
 
         # 요청 헤더 설정
         headers = {
@@ -60,10 +62,10 @@ class AlimtalkUtils :
     # 알림톡 전송
     def send_alimtalk(self, body) : 
         timestamp = str(int(time.time() * 1000))
-        uri = f"{os.getenv("ALIMTALK_BASE_URI")}/messages"
+        uri = f"{base_uri}/messages"
         signature = AlimtalkUtils.make_signature(self, uri= uri, method= "POST", timestamp= timestamp)
         
-        url = f"{os.getenv("ALIMTALK_URL")}{uri}"
+        url = f"{alimtalk_url}{uri}"
         
         # 요청 헤더 설정
         headers = {
