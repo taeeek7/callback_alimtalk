@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 import json
 import os
 import hashlib
@@ -6,6 +7,8 @@ import base64
 import requests
 import time
 import urllib
+
+load_dotenv()
 
 class AlimtalkUtils : 
     # 생성자
