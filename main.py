@@ -116,7 +116,7 @@ def callback_send_main() :
             "templateCode": "CallbackMessage",
             "messages": [
                 {
-                    "to": f"01022317362",
+                    "to": f"{recipient_no}",
                     "title": "안녕하세요 키퍼님",
                     "content": f"안녕하세요 {name} 키퍼님, 열한시 클리닝 {branch}에 지원해 주셔서 감사합니다!\n\n업무 상담과 궁금하신 내용 문의는 [열한시클리닝_{branch}] 채널을 통해 진행됩니다.\n\n상담 시 성함과 연락처를 함께 남겨주시면 빠르고 정확한 답변이 가능하며, 이후 지점 담당자가 확인하여 답변드리도록 하겠습니다.\n\n답변을 기다리시는 동안 교육 영상 시청을 부탁드립니다.\n\n감사합니다.",
                     "buttons": [
